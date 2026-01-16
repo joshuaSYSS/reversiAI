@@ -19,13 +19,17 @@ bool isavailable(vector<vector<int>>& board, int player, int i, int j,  directio
     return NULL;
 }
 
-
 vector<pair<int,int>> getvalidmove(vector<vector<int>>& board, int player){
     vector<pair<int, int>> validmove;
-    for//each player's chess
-        for//each direction
-            if(isavailable(board, player, i, j, direction))
+    
+    for(int block:board){
+        if(block==player){
+            for(auto d : directions){
+                if(isavailable(board, player, i, j, direction))
                 validmove.push_back({i, j});
+            }
+        }
+    }
 }
 
 //      i, j, score
