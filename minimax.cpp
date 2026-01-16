@@ -7,10 +7,15 @@ vector<vector<int>> directions= {{1, -1}, {1, 0}, {1, 1},
 	                            {-1, -1}, {-1, 0}, {-1, 1}};
 
 pair<int, int> isavailable(board, player, i, j, direction){
-    //not out bound and == -player
-    if()
-        isavailable(board, player, i+direction.at(0), j+direction.at(1), direction);
-    return {i, j};
+    //if not in range and its not == to opponent then  NULL
+    if(i>=0 && i<8 && j>=0 && j<8){
+        if(board[i][j] == -player)
+            return isavailable(board, player, i+direction.at(0), j+direction.at(1), direction);
+        else if(board[i][j] == 0)
+            return {i, j};
+    }
+    
+    return NULL;
 }
 
 
