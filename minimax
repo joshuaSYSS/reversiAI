@@ -1,16 +1,35 @@
 
+
+temp getvalidmove(board, int player){
+    vector<pair<int>> vaildmove;
+    for//each player
+        isavailable(board, player){
+            
+        }
+}
+
 //      i, j, score
 tuple<int, int, int> minimax(board, depth, a, b, player){   //player: 1/-1
-    if(depth == 0 || if(hasWinner(borad, i, j, player)))
+    int i, j;
+
+    if(depth == 0 || if(hasWinner(board, i, j, player)))
             if(depth == 0){
-                return {i, j, getScore(i, j)};
+                return {NULL, NULL, getScore(i, j)};
             }
-            return inf;
+            return {NULL, NULL, inf};
     }
     
     if(player+1){   // 2 or 0
-        auto [i, j, score] = minimax(boardcopy, depth-1, a, b, -player);
+        int value = -player*inf;
+        auto validmove = getvalidmove(board, player);
+        
+        for(tie [i, j] : )
+        
+        for//each available i, j
+            auto [_, _, score] = minimax(boardcopy(i, j), depth-1, a, b, -player);
+        return {i, j, value};
     }else{
-        auto [i, j, score] = minimax(boardcopy, depth-1, a, b, -player);
+        int value = player*inf;
+        auto [_, _, score] = minimax(boardcopy, depth-1, a, b, -player);
     }
 }
