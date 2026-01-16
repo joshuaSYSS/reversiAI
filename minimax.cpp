@@ -1,11 +1,22 @@
 
 
-temp getvalidmove(board, int player){
+
+vector<vector<int>> directions= {{1, -1}, {1, 0}, {1, 1}, 
+	                            {0, -1}         , {0, 1}, 
+	                            {-1, -1}, {-1, 0}, {-1, 1}};
+
+pair<int, int> isavailable(board, player, i, j, direction){
+    //not out bound and == -player
+    if()
+        isavailable(board, player, i+direction.at(0), j+direction.at(1), direction);
+    return {i, j};
+}
+
+
+vector<pair<int,int>> getvalidmove(board, int player){
     vector<pair<int>> vaildmove;
-    for//each player
-        isavailable(board, player){
-            
-        }
+    for//each player's chess
+        vailmove.add(isavailable(board, player, i, j, direction));
 }
 
 //      i, j, score
