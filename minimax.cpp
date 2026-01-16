@@ -1,4 +1,5 @@
-
+#include <vector>
+using namespace std;
 
 
 vector<vector<int>> directions= {{1, -1}, {1, 0}, {1, 1}, 
@@ -23,7 +24,7 @@ vector<pair<int,int>> getvalidmove(board, int player){
 tuple<int, int, int> minimax(board, depth, a, b, player){   //player: 1/-1
     int i, j;
 
-    if(depth == 0 || if(hasWinner(board, i, j, player)))
+    if(depth == 0 || hasWinner(board, i, j, player)){
             if(depth == 0){
                 return {NULL, NULL, getScore(i, j)};
             }
