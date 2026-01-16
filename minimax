@@ -1,1 +1,16 @@
 
+//      i, j, score
+tuple<int, int, int> minimax(board, depth, a, b, player){   //player: 1/-1
+    if(depth == 0 || if(hasWinner(borad, i, j, player)))
+            if(depth == 0){
+                return {i, j, getScore(i, j)};
+            }
+            return inf;
+    }
+    
+    if(player+1){   // 2 or 0
+        auto [i, j, score] = minimax(boardcopy, depth-1, a, b, -player);
+    }else{
+        auto [i, j, score] = minimax(boardcopy, depth-1, a, b, -player);
+    }
+}
