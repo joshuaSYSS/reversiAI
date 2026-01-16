@@ -7,7 +7,7 @@ vector<vector<int>> directions= {{1, -1}, {1, 0}, {1, 1},
 	                            {0, -1}         , {0, 1}, 
 	                            {-1, -1}, {-1, 0}, {-1, 1}};
 
-bool isavailable(vector<vector<int>>& board, int player, int i, int j, int direction){
+bool isavailable(vector<vector<int>>& board, int player, int i, int j,  direction){
     //if not in range and its not == to opponent then  NULL
     if(i>=0 && i<8 && j>=0 && j<8){
         if(board[i][j] == -player)
@@ -23,8 +23,9 @@ bool isavailable(vector<vector<int>>& board, int player, int i, int j, int direc
 vector<pair<int,int>> getvalidmove(vector<vector<int>>& board, int player){
     vector<pair<int, int>> validmove;
     for//each player's chess
-        if(isavailable(board, player, i, j, direction))
-            validmove.push_back({i, j});
+        for//each direction
+            if(isavailable(board, player, i, j, direction))
+                validmove.push_back({i, j});
 }
 
 //      i, j, score
