@@ -1,7 +1,8 @@
 #include <vector>
 #include <set>
 using namespace std;
-
+#define a first
+#define b second
 
 vector<vector<int>> directions= {{1, -1}, {1, 0}, {1, 1}, 
 	                            {0, -1}         , {0, 1}, 
