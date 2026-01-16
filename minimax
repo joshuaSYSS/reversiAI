@@ -23,12 +23,15 @@ tuple<int, int, int> minimax(board, depth, a, b, player){   //player: 1/-1
         int value = -player*inf;
         auto validmove = getvalidmove(board, player);
         
-        for(tie [i, j] : )
-        
-        for//each available i, j
-            auto [_, _, score] = minimax(boardcopy(i, j), depth-1, a, b, -player);
+        for(auto validmove : getvalidmove(board, player)){
+            for(tie [i, j] : validmove){
+                auto [_, _, score] = minimax(boardcopy(i, j), depth-1, a, b, -player);
+            }
+        }
         return {i, j, value};
+        
     }else{
+        
         int value = player*inf;
         auto [_, _, score] = minimax(boardcopy, depth-1, a, b, -player);
     }
