@@ -1,4 +1,5 @@
 #include <vector>
+#include <set>
 using namespace std;
 
 
@@ -6,7 +7,7 @@ vector<vector<int>> directions= {{1, -1}, {1, 0}, {1, 1},
 	                            {0, -1}         , {0, 1}, 
 	                            {-1, -1}, {-1, 0}, {-1, 1}};
 
-pair<int, int> isavailable(board, player, i, j, direction){
+bool isavailable(vector<vector<int>>& board, int player, int i, int j, int direction){
     //if not in range and its not == to opponent then  NULL
     if(i>=0 && i<8 && j>=0 && j<8){
         if(board[i][j] == -player)
@@ -19,14 +20,15 @@ pair<int, int> isavailable(board, player, i, j, direction){
 }
 
 
-vector<pair<int,int>> getvalidmove(board, int player){
-    vector<pair<int>> vaildmove;
+vector<pair<int,int>> getvalidmove(vector<vector<int>>& board, int player){
+    vector<pair<int, int>> validmove;
     for//each player's chess
-        vailmove.add(isavailable(board, player, i, j, direction));
+        if(isavailable(board, player, i, j, direction))
+            validmove.push_back({i, j});
 }
 
 //      i, j, score
-tuple<int, int, int> minimax(board, depth, a, b, player){   //player: 1/-1
+tuple<int, int, int> minimax(vector<vector<int>>& board, int depth, int a, int b, int player){   //player: 1/-1
     int i, j;
 
     if(depth == 0 || hasWinner(board, i, j, player)){
