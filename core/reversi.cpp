@@ -1,16 +1,17 @@
 #include <vector>
+#include <set>
 #include <optional>
 
 using namespace std;
 
 const int BOARD_SIZE = 8;
+vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
 
 const int DIRECTION_SIZE = 8;
-const vector<pair<int, int>> DIRECTIONS = {{1, -1}, {1, 0}, {1, 1}, 
-	                            {0, -1}         , {0, 1}, 
-	                            {-1, -1}, {-1, 0}, {-1, 1}};
+const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1}, 
+	                            			{0, -1}         ,		{0, 1}, 
+	                            			{-1, -1},	{-1, 0},	{-1, 1}};
 
-vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
 //not placed: 0
 //player 1: 1
 //player 2: -1
@@ -62,16 +63,16 @@ vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i
 }
 */
 
-optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction) {
-	int x=i+direction.first, y=j+direction.second;
-	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return nullopt;
-	if(board[x][y] ==player)	return nullopt;
-	if(board[x][y] == -player)
-		return availablefield(board, player, x, y, direction);
-	return {{x, y}};
+optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction, bool op_found=0) {
+	int x = i + direction.first, y = j + direction.second;
+	
+    if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return nullopt;
+    if(board[x][y] == 0)	return op_found ? optional{pair{x, y}} : nullopt;
+    if(board[x][y] == -player)	return availablefield(board, player, x, y, direction, 1);
+    return nullopt;
 }
 
-set<pair<int,int>> getvalidmove(vector<vector<int>>& board, int player){
+set<pair<int, int>> getvalidmove(vector<vector<int>>& board, int player){
     set<pair<int, int>> validmove;
     for(int i=0; i<BOARD_SIZE; i++)
 		for(int j=0; j<BOARD_SIZE; j++)
