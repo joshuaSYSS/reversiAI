@@ -1,0 +1,1 @@
+int getWeight(int, int);
