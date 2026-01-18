@@ -10,3 +10,6 @@ const vector<vector<int>> WEIGHTS = {
     { -64, -96,  -8,  -8,  -8,  -8, -96, -64},
     { 128, -64,  32,  16,  16,  32, -64, 128}
 };
+int getWeight(int i, int j){
+    return WEIGHTS[i][j];
+}
