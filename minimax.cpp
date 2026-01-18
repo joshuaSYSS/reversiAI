@@ -1,6 +1,7 @@
 #include <vector>
 #include <set>
 #include "weight.h"
+#include "reversi.h"
 using namespace std;
 
 //      i, j, score
