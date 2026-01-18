@@ -1,8 +1,6 @@
 #include <iostream>
 #include "core/reversi.h"
-#include "mcts/node.h"
-#include "mcts/puct.h"
-#include "mcts/temperature.h"
+#include "minimax.h"
 using namespace std;
 int main(void){
 
