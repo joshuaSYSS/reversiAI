@@ -31,6 +31,7 @@ void place(int i, int j, int player){
 	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all oponent chess between the two self chesses "o x x o"
 }
 //	above <-- version 2
+
 void place(int i, int j, int player){
     board[i][j] = player;
     
