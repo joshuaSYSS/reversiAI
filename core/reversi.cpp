@@ -8,11 +8,29 @@ const vector<pair<int, int>> DIRECTIONS = {{1, -1}, {1, 0}, {1, 1},
 	                            {0, -1}         , {0, 1}, 
 	                            {-1, -1}, {-1, 0}, {-1, 1}};
 
+vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
 //not placed: 0
 //player 1: 1
 //player 2: -1
-vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
 
+bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction){
+	int x = i + direction.first, y = j + direction.second;
+	
+    if(x < 0 || x >= 8 || y < 0 || y >= 8 || board[x][y] == 0)	return false;
+    if(board[x][y] == -player){
+        if(reverse(board, player, x, y, direction)){
+            board[x][y] = player;
+            return true;
+        }
+    }
+    return (board[x][y] == player);
+}
+
+void place(int i, int j, int player){
+    board[i][j] = player;
+	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all oponent chess between the two self chesses "o x x o"
+}
+//	above <-- version 2
 void place(int i, int j, int player){
     board[i][j] = player;
     
@@ -40,32 +58,6 @@ vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i
 	}	
 }
 */
-
-//version 2 ->
-
-void place(int i, int j, int player){
-	for(auto d: DIRECTIONS){			//check for each direction, reverse all oponent chess between the two self chesses "o x x o"
-		reverse(board, player, i, j, d);
-	}
-		
-}
-
-bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction){
-	bool doit = 0;
-	if(i+direction.first>=0 && i+direction.first<8 && j+direction.second>=0 && j+direction.second<8){
-		if(board[i+direction.first][j+direction.second] == 0){
-			return 0;
-		}else if(board[i+direction.first][j+direction.second] == -player){
-			doit = reverse(board, player, i+direction.first, j+direction.second, direction);
-		}else{
-			return 1;
-		}
-	}
-	if(doit){
-		board[i][j] == player;
-	}
-	return 1;
-}
 
 vector<bool> isavailable(vector<vector<int>>& board, int player, int i, int j) {
 	//if not in range and its not == to opponent then  NULL
