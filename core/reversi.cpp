@@ -1,4 +1,6 @@
 #include <vector>
+#include <optional>
+
 using namespace std;
 
 const int BOARD_SIZE = 8;
@@ -60,29 +62,25 @@ vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i
 }
 */
 
-vector<bool> isavailable(vector<vector<int>>& board, int player, int i, int j) {
-	//if not in range and its not == to opponent then  NULL
-	if(i>=0 && i<8 && j>=0 && j<8) {
-		if(board[i][j] == -player)
-			return isavailable(board, player, i+direction.first, j+direction.second);
-		else if(board[i][j] == 0)
-			return true;
-	}
-
-	return false;
+optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction) {
+	int x=i+direction.first, y=j+direction.second;
+	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return nullopt;
+	if(board[x][y] ==player)	return nullopt;
+	if(board[x][y] == -player)
+		return availablefield(board, player, x, y, direction);
+	return {{x, y}};
 }
 
-vector<pair<int,int>> getvalidmove(vector<vector<int>>& board, int player){
-    vector<pair<int, int>> validmove;
-    
-    for(int block:board){
-        if(block==player){
-            for(auto d : directions){
-                if(isavailable(board, player, i, j, direction))
-                validmove.push_back({i, j});
-            }
-        }
-    }
+set<pair<int,int>> getvalidmove(vector<vector<int>>& board, int player){
+    set<pair<int, int>> validmove;
+    for(int i=0; i<BOARD_SIZE; i++)
+		for(int j=0; j<BOARD_SIZE; j++)
+        	if(board[i][j]==player)
+	            for(auto& d : DIRECTIONS)
+					if(auto result = availablefield(board, player, i, j, d))
+	                	validmove.insert(*result);
+	    
+    return validmove;
 }
 
 vector<vector<int>> getBoard(){
