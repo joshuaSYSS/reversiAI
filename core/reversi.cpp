@@ -53,7 +53,7 @@ bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int
 
 void place(int i, int j, int player) {
 	board[i][j] = player;
-	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all oponent chess between the two self chesses "o x x o"
+	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
 }
 
 //	above <-- version 2
@@ -88,4 +88,39 @@ vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i
 
 vector<vector<int>> getBoard() {
 	return board;
+}
+
+int determineWinner(){
+	int a = 0; //1
+	int b = 0; //-1
+	for(int i = 0; i < BOARD_SIZE;i++){
+		for(int j = 0; j < BOARD_SIZE;j++){
+			if(board[i][j] == 1) a++;
+			else if(board[i][j] == -1) b++;
+		}
+	}
+	if(a > b) return 1;
+	if(b > a) return -1;
+	return 2;
+}
+
+//returns the winner 1/-1, if not ended, then return 0. if draw, returns 2
+//condition 1: all squares are filled
+//condition 2: both players cannot place
+int hasWinner(){
+	//condition 1
+	int ok = 1;
+	for(int i = 0; i < BOARD_SIZE;i++){
+		for(int j = 0; j < BOARD_SIZE;j++){
+			if(!board[i][j]) {ok = 0; break;}
+		}
+		if(!ok) break;
+	}
+	if(ok) {
+		return determineWinner();
+	}
+
+	//condition 2
+	//TO-DO
+	return determineWinner();
 }
