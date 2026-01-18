@@ -30,8 +30,16 @@ void place(int i, int j, int player){
     }
 }
 
-vector<bool> isavailable(vector<vector<int>>& board, int player, int i, int j){
+vector<bool> isavailable(vector<vector<int>>& board, int player, int i, int j) {
+	//if not in range and its not == to opponent then  NULL
+	if(i>=0 && i<8 && j>=0 && j<8) {
+		if(board[i][j] == -player)
+			return isavailable(board, player, i+direction.first, j+direction.second);
+		else if(board[i][j] == 0)
+			return true;
+	}
 
+	return false;
 }
 
 vector<vector<int>> getBoard(){
