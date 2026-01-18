@@ -17,6 +17,27 @@ const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
 //player 1: 1
 //player 2: -1
 
+optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction, bool op_found=0) {
+	int x = i + direction.first, y = j + direction.second;
+
+	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return nullopt;
+	if(board[x][y] == 0)	return op_found ? optional{pair{x, y}} : nullopt;
+	if(board[x][y] == -player)	return availablefield(board, player, x, y, direction, 1);
+	return nullopt;
+}
+
+set<pair<int, int>> getvalidmove(vector<vector<int>>& board, int player) {
+	set<pair<int, int>> validmove;
+	
+	for(int i=0; i<BOARD_SIZE; i++)
+		for(int j=0; j<BOARD_SIZE; j++)
+			if(board[i][j]==player)
+				for(auto& d : DIRECTIONS)
+					if(auto result = availablefield(board, player, i, j, d))
+						validmove.insert(*result);
+	return validmove;
+}
+
 bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction) {
 	int x = i + direction.first, y = j + direction.second;
 
@@ -34,6 +55,7 @@ void place(int i, int j, int player) {
 	board[i][j] = player;
 	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all oponent chess between the two self chesses "o x x o"
 }
+
 //	above <-- version 2
 
 void place(int i, int j, int player) {
@@ -63,28 +85,6 @@ vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i
 	}
 }
 */
-
-optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction, bool op_found=0) {
-	int x = i + direction.first, y = j + direction.second;
-
-	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return nullopt;
-	if(board[x][y] == 0)	return op_found ? optional{pair{x, y}} :
-		                               nullopt;
-	if(board[x][y] == -player)	return availablefield(board, player, x, y, direction, 1);
-	return nullopt;
-}
-
-set<pair<int, int>> getvalidmove(vector<vector<int>>& board, int player) {
-	set<pair<int, int>> validmove;
-	for(int i=0; i<BOARD_SIZE; i++)
-		for(int j=0; j<BOARD_SIZE; j++)
-			if(board[i][j]==player)
-				for(auto& d : DIRECTIONS)
-					if(auto result = availablefield(board, player, i, j, d))
-						validmove.insert(*result);
-
-	return validmove;
-}
 
 vector<vector<int>> getBoard() {
 	return board;
