@@ -97,6 +97,7 @@ int determineWinner(){
 //if player 
 //condition 1: all squares are filled
 //condition 2: both players cannot place
+/*
 int hasWinner(){
 	//condition 1
 	int isFULL = 1;
@@ -126,7 +127,7 @@ int hasWinner(){
 	}
 	
 	if()
-}
+}*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 vector<vector<int>> getBoard() {
