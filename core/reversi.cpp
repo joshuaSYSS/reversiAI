@@ -28,7 +28,7 @@ optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, 
 	return nullopt;
 }
 
-set<pair<int, int>> getvalidmove(vector<vector<int>>& board, int player) {
+set<pair<int, int>> getvalidmove(int player) {
 	set<pair<int, int>> validmove;
 	
 	for(int i=0; i<BOARD_SIZE; i++)

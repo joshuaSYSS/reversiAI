@@ -1,9 +1,8 @@
 #include <vector>
+#include <set>
 using namespace std;
 
-vector<vector<int>> available();
+set<pair<int, int>> getvalidmove(int);
 void place(int, int, int);
-void flip();
-vector<bool> isavailable(vector<vector<int>>&, int, int, int);
 vector<vector<int>> getBoard();
 int hasWinner();

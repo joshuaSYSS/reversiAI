@@ -5,14 +5,19 @@
 using namespace std;
 
 const int inf = 1e9;
+const int MAX_DEPTH = 6;
 
 //      i, j, score
-tuple<int, int, int> minimax(int depth, int a, int b, int player){   //player: 1/-1
+int minimax(int depth, int a, int b, int player){   //player: 1/-1
+    if(depth == 0){
+
+    }
+
     int i, j;
 
-    if(depth == 0 || hasWinner(player)){
+    if(depth == 0 || hasWinner()){
             if(depth == 0){
-                return {NULL, NULL, getScore(i, j)};
+                return {NULL, NULL, getWeight(i, j)};
             }
             return {NULL, NULL, inf};
     }
@@ -33,4 +38,10 @@ tuple<int, int, int> minimax(int depth, int a, int b, int player){   //player: 1
         int value = player*inf;
         auto [_, _, score] = minimax(boardcopy, depth-1, a, b, -player);
     }
+}
+
+
+pair<int, int> callAI(int player){
+    set<pair<int, int>> validmove = getvalidmove(board, player);
+    
 }
