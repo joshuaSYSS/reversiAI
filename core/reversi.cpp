@@ -119,12 +119,12 @@ int determineWinner(){
 //condition 2: both players cannot place ; tempting;
 int hasWinner(){
 	//condition 1
-	int ok = 1;
+	int isFULL = 1;
 	for(int i = 0; i < BOARD_SIZE;i++){
 		for(int j = 0; j < BOARD_SIZE;j++){
-			if(!board[i][j]) {ok = 0; break;}
+			if(!board[i][j]) {isFULL = 0; break;}
 		}
-		if(!ok) break;
+		if(!isFULL) break;
 	}
 	if(ok) {
 		return determineWinner();
