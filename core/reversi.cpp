@@ -92,17 +92,11 @@ vector<vector<int>> getBoard() {
 }
 
 int determineWinner(){
-	int a = 0; //1
-	int b = 0; //-1
-	for(int i = 0; i < BOARD_SIZE;i++){
-		for(int j = 0; j < BOARD_SIZE;j++){
-			if(board[i][j] == 1) a++;
-			else if(board[i][j] == -1) b++;
-		}
+	int sum = 0;
+	for(int i = 0; i < BOARD_SIZE*BOARD_SIZE;i++){
+		sum+=board[0][i];
 	}
-	if(a > b) return 1;
-	if(b > a) return -1;
-	return 2;
+	return sum;
 }
 
 //returns the winner 1/-1, if not ended, then return 0. if draw, returns 2
