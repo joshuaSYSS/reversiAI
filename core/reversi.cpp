@@ -99,6 +99,21 @@ int determineWinner(){
 	return sum;
 }
 
+
+int determineWinner(){
+	int a = 0; //1
+	int b = 0; //-1
+	for(int i = 0; i < BOARD_SIZE;i++){
+		for(int j = 0; j < BOARD_SIZE;j++){
+			if(board[i][j] == 1) a++;
+			else if(board[i][j] == -1) b++;
+		}
+	}
+	if(a > b) return 1;
+	if(b > a) return -1;
+	return 2;
+}
+
 //returns the winner 1/-1, if not ended, then return 0. if draw, returns 2
 //condition 1: all squares are filled ; done;
 //condition 2: both players cannot place ; tempting;
