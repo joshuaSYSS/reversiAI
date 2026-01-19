@@ -108,7 +108,7 @@ int hasWinner(int player) {
     return determineWinner();
     
 not_full:
-    if(!getvalidmove(board, player).empty()) return -2;
+    if(!getvalidmove(board, -player).empty()) return -2;
     if(!getvalidmove(board, player).empty()) return 2;
     return determineWinner();
 }
