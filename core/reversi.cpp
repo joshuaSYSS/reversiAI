@@ -17,6 +17,8 @@ const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
 //player 1: 1
 //player 2: -1
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 optional<pair<int, int>> availablefield(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction, bool op_found=0) {
 	int x = i + direction.first, y = j + direction.second;
 
@@ -37,6 +39,7 @@ set<pair<int, int>> getvalidmove(vector<vector<int>>& board, int player) {
 						validmove.insert(*result);
 	return validmove;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction) {
 	int x = i + direction.first, y = j + direction.second;
@@ -55,41 +58,7 @@ void place(int i, int j, int player) {
 	board[i][j] = player;
 	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
 }
-
-//	above <-- version 2
-
-/*
-vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i, int j) {
-	vector<bool> b;
-	for(auto d : directions){
-		do{	int x=i+direction.first; y=j+direction.second;
-		  }while(x>=0 && y<8 && x>=0 && y<8 && board[x][y] == -player);
-		if(board[x][y] == player)	b.pushback(1);
-		else	b.pushback(0);
-	}
-}
-*/
-
-void place(int i, int j, int player) {
-	board[i][j] = player;
-
-	vector<bool> b = reversible_direaction(board, player, i, j);
-	for(int d = 0; d < DIRECTION_SIZE; d++) {
-		if(b[d]) {
-			int x = i + DIRECTIONS[d][0];
-			int y = j + DIRECTIONS[d][1];
-			while(board[x][y] == -player) {
-				board[x][y] = player;
-				x += DIRECTIONS[d][0];
-				y += DIRECTIONS[d][1];
-			}
-		}
-	}
-}
-
-vector<vector<int>> getBoard() {
-	return board;
-}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int determineWinner() {
     int sum = 0;
@@ -98,7 +67,6 @@ int determineWinner() {
             sum += board[i][j];
     return sum > 0 ? 1 : (sum < 0 ? -1 : 0);
 }
-
 
 int hasWinner(int player) {
     for(const auto& row : board)
@@ -111,17 +79,6 @@ not_full:
     if(!getvalidmove(board, player).empty()) return player*2;
     return determineWinner();
 }
-
-
-
-int hasWinner(player){
-	if(!getvalidmove(board, -player).empty())	return -2;
-	if(!getvalidmove(board, player).empty())	return 2;
-	return determineWinner()/abs(determineWinner());
-}
-
-
-
 
 int determineWinner(){
 	int a = 0; //1
@@ -170,9 +127,8 @@ int hasWinner(int player){
 	
 	if()
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int hasWinner(){
-	if(getvalidmove(board, 1).empty() && getvalidmove(board, -1).empty())
-		return determineWinner();
-	return determineWinner();
+vector<vector<int>> getBoard() {
+	return board;
 }
