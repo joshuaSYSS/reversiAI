@@ -59,13 +59,13 @@ void place(int i, int j, int player) {
 	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//返回值: 2= x 贏, -2= o 贏, 0= 平局, 1= x 繼續, -1= o 繼續
 int determineWinner() {
     int sum = 0;
     for(int i = 0; i < BOARD_SIZE; i++)
         for(int j = 0; j < BOARD_SIZE; j++)
             sum += board[i][j];
-    return sum > 0 ? 1 : (sum < 0 ? -1 : 0);
+    return sum > 0 ? 2 : (sum < 0 ? -2 : 0);
 }
 
 int hasWinner(int player) {
@@ -75,8 +75,8 @@ int hasWinner(int player) {
                 goto not_full;
     return determineWinner();
 not_full:
-    if(!getvalidmove(board, -player).empty()) return -player*2;
-    if(!getvalidmove(board, player).empty()) return player*2;
+    if(!getvalidmove(board, -player).empty()) return -player;
+    if(!getvalidmove(board, player).empty()) return player;
     return determineWinner();
 }
 
