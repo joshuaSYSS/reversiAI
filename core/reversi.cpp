@@ -126,7 +126,7 @@ int hasWinner(){
 		}
 		if(!isFULL) break;
 	}
-	if(ok) {
+	if(isFULL) {
 		return determineWinner();
 	}
 
