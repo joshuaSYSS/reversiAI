@@ -42,6 +42,16 @@ int minimax(int depth, int a, int b, int player){   //player: 1/-1
 
 
 pair<int, int> callAI(int player){
-    set<pair<int, int>> validmove = getvalidmove(board, player);
-    
+    set<pair<int, int>> validmove = getvalidmove(player);
+    int best_i = -1, best_j = -1;
+    int best_score = -player*inf;
+    for(auto [i, j] : validmove){
+        int score = minimax(MAX_DEPTH, -inf, inf, -player);
+        if(score > best_score){
+            best_score = score;
+            best_i = i;
+            best_j = j;
+        }
+    }
+    return {best_i, best_j};
 }
