@@ -99,10 +99,12 @@ int determineWinner(){
 	return sum;
 }
 
-//returns the winner 1/-1, if not ended, then return 0. if draw, returns 2
+//if player
 //condition 1: all squares are filled
 //condition 2: both players cannot place
 int hasWinner(){
+	
+
 	//condition 1
 	int ok = 1;
 	for(int i = 0; i < BOARD_SIZE;i++){
