@@ -103,7 +103,7 @@ int determineWinner(){
 //condition 1: all squares are filled
 //condition 2: both players cannot place
 int hasWinner(){
-	
+
 
 	//condition 1
 	int ok = 1;
