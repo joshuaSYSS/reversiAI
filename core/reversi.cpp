@@ -100,8 +100,8 @@ int determineWinner(){
 }
 
 //returns the winner 1/-1, if not ended, then return 0. if draw, returns 2
-//condition 1: all squares are filled
-//condition 2: both players cannot place
+//condition 1: all squares are filled ; done;
+//condition 2: both players cannot place ; tempting;
 int hasWinner(){
 	//condition 1
 	int ok = 1;
