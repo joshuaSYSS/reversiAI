@@ -91,25 +91,24 @@ vector<vector<int>> getBoard() {
 	return board;
 }
 
-int determineWinner(){
-	int sum = 0;
-	for(int i = 0; i < BOARD_SIZE*BOARD_SIZE;i++){
-		sum+=board[0][i];
-	}
-	return return sum > 0 ? 1 : (sum < 0 ? -1 : 0);
+int determineWinner() {
+    int sum = 0;
+    for(int i = 0; i < BOARD_SIZE; i++)
+        for(int j = 0; j < BOARD_SIZE; j++)
+            sum += board[i][j];
+    return sum > 0 ? 1 : (sum < 0 ? -1 : 0);
 }
+
 
 int hasWinner(int player) {
     for(const auto& row : board)
         for(int cell : row)
             if(cell == 0)
                 goto not_full;
-    
     return determineWinner();
-    
 not_full:
-    if(!getvalidmove(board, -player).empty()) return -2;
-    if(!getvalidmove(board, player).empty()) return 2;
+    if(!getvalidmove(board, -player).empty()) return -player*2;
+    if(!getvalidmove(board, player).empty()) return player*2;
     return determineWinner();
 }
 
