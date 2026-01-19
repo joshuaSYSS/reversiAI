@@ -97,7 +97,7 @@ int determineWinner(){
 //if player 
 //condition 1: all squares are filled
 //condition 2: both players cannot place
-int hasWinner(int player){
+int hasWinner(){
 	//condition 1
 	int isFULL = 1;
 	for(int i = 0; i < BOARD_SIZE;i++){

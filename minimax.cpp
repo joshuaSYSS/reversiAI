@@ -7,10 +7,10 @@ using namespace std;
 const int inf = 1e9;
 
 //      i, j, score
-tuple<int, int, int> minimax(vector<vector<int>>& board, int depth, int a, int b, int player){   //player: 1/-1
+tuple<int, int, int> minimax(int depth, int a, int b, int player){   //player: 1/-1
     int i, j;
 
-    if(depth == 0 || hasWinner(board, i, j, player)){
+    if(depth == 0 || hasWinner(player)){
             if(depth == 0){
                 return {NULL, NULL, getScore(i, j)};
             }

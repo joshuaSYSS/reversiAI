@@ -6,4 +6,4 @@ void place(int, int, int);
 void flip();
 vector<bool> isavailable(vector<vector<int>>&, int, int, int);
 vector<vector<int>> getBoard();
-int hasWinner(int);
+int hasWinner();
