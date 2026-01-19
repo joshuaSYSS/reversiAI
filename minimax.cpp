@@ -16,7 +16,7 @@ vector<vector<int>> board;
 int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
     if(depth == 0){
         int score;
-        //compute score
+        score = getWeight(board, player);
         return score;
     }
     
@@ -26,7 +26,7 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         for(auto [i, j] : validmove){
 
             int eval = minimax(depth - 1, a, b, -player, 0);
-
+            //undo place. todo
             maxEval = max(maxEval, eval);
             a = max(a, eval);
             if(b <= a)
@@ -36,7 +36,16 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         
     }
     else{
-
+        int minEval = inf;
+        set<pair<int, int>> validmove = getvalidmove(player);
+        for(auto [i, j] : validmove){
+            int eval = minimax(depth - 1, a, b, -player, 1);
+            //undo place. todo
+            minEval = min(minEval, eval);
+            b = min(b, eval);
+            if(b <= a)
+                break;
+        }
     }
 }
 

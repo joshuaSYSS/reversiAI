@@ -13,7 +13,7 @@ const vector<vector<int>> WEIGHTS = {
 
 const int BOARD_SIZE = 8;
 
-int getWeight(const vector<vector<int>>& board, int player) {
+int getWeight(vector<vector<int>>& board, int player) {
     int sum = 0;
     for(int i = 0; i < BOARD_SIZE; i++) {
         for(int j = 0; j < BOARD_SIZE; j++) {
