@@ -146,3 +146,13 @@ int hasWinner(){
 	}
 	return 0;
 }
+
+int hasWinner(){
+	int isFULL = 1;
+	for(int i = 0; i < BOARD_SIZE;i++)
+		for(int j = 0; j < BOARD_SIZE;j++)
+			if(!board[i][j]) 
+				if(getvalidmove(board, 1).empty() && getvalidmove(board, -1).empty())
+					return determineWinner();
+	return determineWinner();
+}
