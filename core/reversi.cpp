@@ -44,7 +44,7 @@ set<pair<int, int>> getvalidmove(int player) {
 bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction) {
 	int x = i + direction.first, y = j + direction.second;
 
-	if(x < 0 || x >= 8 || y < 0 || y >= 8 || board[x][y] == 0)	return false;
+	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE || board[x][y] == 0)	return false;
 	if(board[x][y] == -player) {
 		if(reverse(board, player, x, y, direction)) {
 			board[x][y] = player;
