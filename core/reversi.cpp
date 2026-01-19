@@ -96,8 +96,32 @@ int determineWinner(){
 	for(int i = 0; i < BOARD_SIZE*BOARD_SIZE;i++){
 		sum+=board[0][i];
 	}
-	return sum;
+	return return sum > 0 ? 1 : (sum < 0 ? -1 : 0);
 }
+
+int hasWinner(int player) {
+    for(const auto& row : board)
+        for(int cell : row)
+            if(cell == 0)
+                goto not_full;
+    
+    return determineWinner();
+    
+not_full:
+    if(!getvalidmove(board, player).empty()) return -2;
+    if(!getvalidmove(board, player).empty()) return 2;
+    return determineWinner();
+}
+
+
+
+int hasWinner(player){
+	if(!getvalidmove(board, -player).empty())	return -2;
+	if(!getvalidmove(board, player).empty())	return 2;
+	return determineWinner()/abs(determineWinner());
+}
+
+
 
 
 int determineWinner(){
@@ -148,11 +172,7 @@ int hasWinner(){
 }
 
 int hasWinner(){
-	int isFULL = 1;
-	for(int i = 0; i < BOARD_SIZE;i++)
-		for(int j = 0; j < BOARD_SIZE;j++)
-			if(!board[i][j]) 
-				if(getvalidmove(board, 1).empty() && getvalidmove(board, -1).empty())
-					return determineWinner();
+	if(getvalidmove(board, 1).empty() && getvalidmove(board, -1).empty())
+		return determineWinner();
 	return determineWinner();
 }
