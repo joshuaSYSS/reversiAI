@@ -56,7 +56,7 @@ bool reverse(vector<vector<int>>& board, int player, int i, int j, pair<int, int
 
 void place(int i, int j, int player) {
 	board[i][j] = player;
-	for(auto& d: DIRECTIONS)	reverse(board, player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
+	for(auto& d: DIRECTIONS) reverse(board, player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //返回值:	2= 黑 贏 | -2= o=白 贏 | 0= 平局 | 1= 黑 繼續 | -1= 白 繼續
@@ -75,8 +75,8 @@ int hasWinner(int player) {
                 goto not_full;
     return determineWinner();
 not_full:
-    if(!getvalidmove(board, -player).empty()) return -player;
-    if(!getvalidmove(board, player).empty()) return player;
+    if(!getvalidmove(-player).empty()) return -player;
+    if(!getvalidmove(player).empty()) return player;
     return determineWinner();
 }
 
@@ -116,8 +116,8 @@ int hasWinner(){
 	for(int i=0; i<BOARD_SIZE; i++)
 		for(int j=0; j<BOARD_SIZE; j++)
 			if(!board[i][j]){
-				auto validmove1 = getvalidmove(board, 1);
-				auto validmove2 = getvalidmove(board, -1);
+				auto validmove1 = getvalidmove(1);
+				auto validmove2 = getvalidmove(-1);
 				if(!validmove1.empty()) a = 1;
 				if(!validmove2.empty()) b = 1;
 			}
