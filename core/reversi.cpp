@@ -58,6 +58,18 @@ void place(int i, int j, int player) {
 
 //	above <-- version 2
 
+/*
+vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i, int j) {
+	vector<bool> b;
+	for(auto d : directions){
+		do{	int x=i+direction.first; y=j+direction.second;
+		  }while(x>=0 && y<8 && x>=0 && y<8 && board[x][y] == -player);
+		if(board[x][y] == player)	b.pushback(1);
+		else	b.pushback(0);
+	}
+}
+*/
+
 void place(int i, int j, int player) {
 	board[i][j] = player;
 
@@ -74,17 +86,6 @@ void place(int i, int j, int player) {
 		}
 	}
 }
-/*
-vector<bool> reversible_direaction(vector<vector<int>>& board, int player, int i, int j) {
-	vector<bool> b;
-	for(auto d : directions){
-		do{	int x=i+direction.first; y=j+direction.second;
-		  }while(x>=0 && y<8 && x>=0 && y<8 && board[x][y] == -player);
-		if(board[x][y] == player)	b.pushback(1);
-		else	b.pushback(0);
-	}
-}
-*/
 
 vector<vector<int>> getBoard() {
 	return board;
@@ -121,6 +122,18 @@ int hasWinner(){
 	}
 
 	//condition 2
-	//TO-DO
-	return determineWinner();
+	int a = 0; //player 1
+	int b = 0; //player 2
+	for(int i=0; i<BOARD_SIZE; i++)
+		for(int j=0; j<BOARD_SIZE; j++)
+			if(!board[i][j]){
+				auto validmove1 = getvalidmove(board, 1);
+				auto validmove2 = getvalidmove(board, -1);
+				if(!validmove1.empty()) a = 1;
+				if(!validmove2.empty()) b = 1;
+			}
+	if(!a && !b){
+		return determineWinner();
+	}
+	return 0;
 }
