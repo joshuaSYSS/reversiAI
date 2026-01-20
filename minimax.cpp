@@ -13,7 +13,7 @@ const int inf = 1e9;
 const int MAX_DEPTH = 4;
 const int BOARD_SIZE = 8;
 
-vector<vector<int>> board;
+static vector<vector<int>> board;
 
 struct pers{
     int i;
@@ -56,6 +56,7 @@ void place1(int i, int j, int player) {
     p.push_back({i, j, board[i][j]});
 	board[i][j] = player;
 	for(auto& d: DIRECTIONS) reverse(player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
+    update(i, j);
 }
 
 //      i, j, score
