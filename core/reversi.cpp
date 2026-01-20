@@ -81,6 +81,7 @@ not_full:
     return determineWinner();
 }
 
+/*
 int determineWinner(){
 	int a = 0; //1
 	int b = 0; //-1
@@ -93,7 +94,7 @@ int determineWinner(){
 	if(a > b) return 1;
 	if(b > a) return -1;
 	return 2;
-}
+}*/
 
 //if player 
 //condition 1: all squares are filled

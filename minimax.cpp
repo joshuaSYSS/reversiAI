@@ -2,7 +2,7 @@
 #include <set>
 #include <stack>
 #include "weight.h"
-#include "reversi.h"
+#include "core/reversi.h"
 using namespace std;
 
 const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
