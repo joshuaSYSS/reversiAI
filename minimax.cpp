@@ -60,10 +60,10 @@ void place1(int i, int j, int player) {
 }
 
 //      i, j, score
-int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
+int minimax(int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
     if(depth == 0){
         int score;
-        score = getWeight(board, player);
+        score = getWeight(board, rootPlayer);
         return score;
     }
     
@@ -71,12 +71,12 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         int maxEval = -inf;
         set<pair<int, int>> validmove = getvalidmove(player);
         if(validmove.empty()){
-            int eval = minimax(depth - 1, a, b, -player, 0);
+            int eval = minimax(depth - 1, a, b, -player, 0, rootPlayer);
             return eval;
         }
         for(auto [i, j] : validmove){
             place1(i, j, player);
-            int eval = minimax(depth - 1, a, b, -player, 0);
+            int eval = minimax(depth - 1, a, b, -player, 0, rootPlayer);
             undo();
             maxEval = max(maxEval, eval);
             a = max(a, eval);
@@ -89,12 +89,12 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         int minEval = inf;
         set<pair<int, int>> validmove = getvalidmove(player);
         if(validmove.empty()){
-            int eval = minimax(depth - 1, a, b, -player, 1);
+            int eval = minimax(depth - 1, a, b, -player, 1, rootPlayer);
             return eval;
         }
         for(auto [i, j] : validmove){
             place1(i, j, player);
-            int eval = minimax(depth - 1, a, b, -player, 1);
+            int eval = minimax(depth - 1, a, b, -player, 1, rootPlayer);
             undo();
             minEval = min(minEval, eval);
             b = min(b, eval);
@@ -114,7 +114,7 @@ pair<int, int> callAI(int player){
     int best_score = -inf;
     for(auto [i, j] : validmove){
         place1(i, j, player);
-        int score = minimax(MAX_DEPTH - 1, -inf, inf, -player, 0);
+        int score = minimax(MAX_DEPTH - 1, -inf, inf, -player, 0, player);
         undo();
         if(score > best_score){
             best_score = score;

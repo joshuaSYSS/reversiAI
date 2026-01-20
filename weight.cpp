@@ -13,11 +13,12 @@ const vector<vector<int>> WEIGHTS = {
 
 const int BOARD_SIZE = 8;
 
-int getWeight(vector<vector<int>>& board, int player) {
+int getWeight(vector<vector<int>>& board, int rootPlayer) {
     int sum = 0;
     for(int i = 0; i < BOARD_SIZE; i++) {
         for(int j = 0; j < BOARD_SIZE; j++) {
-            sum += (board[i][j] == 0) ? 0 : WEIGHTS[i][j];
+            if(board[i][j] == rootPlayer) sum += WEIGHTS[i][j];
+            else if(board[i][j] == -rootPlayer) sum -= WEIGHTS[i][j];
         }
     }
     return sum;
