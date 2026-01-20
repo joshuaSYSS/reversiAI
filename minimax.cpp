@@ -59,7 +59,6 @@ void place1(int i, int j, int player) {
     update(i, j);
 }
 
-//      i, j, score
 int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
     if(depth == 0){
         int score;
