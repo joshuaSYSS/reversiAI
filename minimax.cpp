@@ -10,7 +10,7 @@ const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
 											{-1, -1},	{-1, 0},	{-1, 1}
 };
 const int inf = 1e9;
-const int MAX_DEPTH = 8;
+const int MAX_DEPTH = 12;
 const int BOARD_SIZE = 8;
 
 static vector<vector<int>> board;
@@ -70,6 +70,10 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
     if(isMax){
         int maxEval = -inf;
         set<pair<int, int>> validmove = getvalidmove(player);
+        if(validmove.empty()){
+            int eval = minimax(depth, a, b, -player, 0);
+            return eval;
+        }
         for(auto [i, j] : validmove){
             place1(i, j, player);
             int eval = minimax(depth - 1, a, b, -player, 0);
@@ -80,11 +84,14 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
                 break;
         }
         return maxEval;
-        
     }
     else{
         int minEval = inf;
         set<pair<int, int>> validmove = getvalidmove(player);
+        if(validmove.empty()){
+            int eval = minimax(depth, a, b, -player, 1);
+            return eval;
+        }
         for(auto [i, j] : validmove){
             place1(i, j, player);
             int eval = minimax(depth - 1, a, b, -player, 1);
@@ -106,7 +113,9 @@ pair<int, int> callAI(int player){
     int best_i = -1, best_j = -1;
     int best_score = -inf;
     for(auto [i, j] : validmove){
-        int score = minimax(MAX_DEPTH, -inf, inf, -player, 1);
+        place1(i, j, player);
+        int score = minimax(MAX_DEPTH - 1, -inf, inf, -player, 1);
+        undo();
         if(score > best_score){
             best_score = score;
             best_i = i;
