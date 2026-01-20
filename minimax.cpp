@@ -59,9 +59,36 @@ void place1(int i, int j, int player) {
     update(i, j);
 }
 
+int determineWinner() {
+    int sum = 0;
+    for(int i = 0; i < BOARD_SIZE; i++)
+        for(int j = 0; j < BOARD_SIZE; j++)
+            sum += board[i][j];
+    return sum > 0 ? 2 : (sum < 0 ? -2 : 0);
+}
+
+int hasWinner1(int player) {
+    for(const auto& row : board)
+        for(int cell : row)
+            if(cell == 0)
+                goto not_full;
+    return determineWinner();
+not_full:
+    if(!getvalidmove(-player).empty()) return -player;
+    if(!getvalidmove(player).empty()) return player;
+    return determineWinner();
+}
 //      i, j, score
 int minimax(int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
     if(depth == 0){
+        set<pair<int, int>> validmove1 = getvalidmove(player);
+        set<pair<int, int>> validmove2 = getvalidmove(-player);
+        if(validmove1.empty() && validmove2.empty()){
+            int winner = hasWinner1(rootPlayer);
+            if(winner == 2) return inf;        //rootPlayer wins
+            else if(winner == -2) return -inf; //rootPlayer loses
+            else return 0;                     //draw
+        }
         int score;
         score = getWeight(board, rootPlayer);
         return score;
