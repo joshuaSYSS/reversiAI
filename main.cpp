@@ -6,6 +6,8 @@ int main(void){
     int player = 1;
     while(true){
         pair<int, int> move;
+        printBoard(player);
+
         if(player == -1){
             cout << "Your turn (format: row col): ";
             int i, j;
@@ -23,7 +25,6 @@ int main(void){
             cout << "AI plays: " << move.first << " " << move.second << endl;
         }
         place(move.first, move.second, player);
-        printBoard(player);
         int nextplayer = hasWinner(player);
 
         switch(nextplayer){
@@ -32,15 +33,6 @@ int main(void){
         	case 0:		cout << "It's a draw!" << endl;		break;
         	default:	player = nextplayer;
         }
-        /*
-        if(winner != 1 && winner != -1){
-            if(winner == 1) cout << "Player 1 wins!" << endl;
-            else if(winner == -1) cout << "Player 2 wins!" << endl;
-            else cout << "It's a draw!" << endl;
-            break;
-        }
-        player = -player;
-        */
     }
   return 0;
 }
