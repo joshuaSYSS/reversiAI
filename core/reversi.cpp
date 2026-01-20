@@ -149,11 +149,12 @@ vector<vector<int>> getBoard() {
 
 void printBoard(int showplayermove=0){
 	vector<vector<int>> boardcopy = board;
-	if(showplayermove)	auto validmove = getvalidmove(showplayermove);
-	for(auto& move: validmove){
-		boardcopy[move.first][move.second] = 2;
+	if(showplayermove){	
+		auto validmove = getvalidmove(showplayermove);
+		for(auto& move: validmove){
+			boardcopy[move.first][move.second] = 2;
+		}
 	}
-		
 	cout << "  ";
 	for(int j = 0; j < BOARD_SIZE; j++){
 		cout << j << " ";
@@ -166,7 +167,8 @@ void printBoard(int showplayermove=0){
 				case 1: 	cout << "● ";	break;
 				case -1: 	cout << "○ ";	break;
 				case 2:		cout << "◦ ";	break;
-				default:	cout << ". ";	break;
+				default:	cout << ". ";
+			}
 		}
 		cout << endl;
 	}
