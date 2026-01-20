@@ -10,7 +10,7 @@ const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
 											{-1, -1},	{-1, 0},	{-1, 1}
 };
 const int inf = 1e9;
-const int MAX_DEPTH = 12;
+const int MAX_DEPTH = 8;
 const int BOARD_SIZE = 8;
 
 static vector<vector<int>> board;
