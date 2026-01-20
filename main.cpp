@@ -26,7 +26,8 @@ int main(void){
         	case -2:	cout << "Player 2 wins!" << endl;	break;
         	case 0:		cout << "It's a draw!" << endl;		break;
         	default:	player = nextplayer;
-                
+        }
+        /*
         if(winner != 1 && winner != -1){
             if(winner == 1) cout << "Player 1 wins!" << endl;
             else if(winner == -1) cout << "Player 2 wins!" << endl;
@@ -34,6 +35,7 @@ int main(void){
             break;
         }
         player = -player;
+        */
     }
   return 0;
 }
