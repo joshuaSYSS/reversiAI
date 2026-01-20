@@ -20,7 +20,7 @@ int main(void){
         place(move.first, move.second, player);
         printBoard();
         int winner = hasWinner(player);
-        if(winner != 0){
+        if(winner != 1 && winner != -1){
             if(winner == 1) cout << "Player 1 wins!" << endl;
             else if(winner == -1) cout << "Player 2 wins!" << endl;
             else cout << "It's a draw!" << endl;
