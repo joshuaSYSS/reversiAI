@@ -20,6 +20,7 @@ struct pers{
     int j;
     int prev_value;
 };
+
 stack<vector<pers>> persistent;
 
 //undo
@@ -50,7 +51,7 @@ bool reverse(int player, int i, int j, pair<int, int> direction) {
 	return (board[x][y] == player);
 }
 
-void place(int i, int j, int player) {
+void place1(int i, int j, int player) {
     p.clear();
     p.push_back({i, j, board[i][j]});
 	board[i][j] = player;
@@ -69,7 +70,7 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         int maxEval = -inf;
         set<pair<int, int>> validmove = getvalidmove(player);
         for(auto [i, j] : validmove){
-            place(i, j, player);
+            place1(i, j, player);
             int eval = minimax(depth - 1, a, b, -player, 0);
             undo();
             maxEval = max(maxEval, eval);
@@ -84,7 +85,7 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         int minEval = inf;
         set<pair<int, int>> validmove = getvalidmove(player);
         for(auto [i, j] : validmove){
-            place(i, j, player);
+            place1(i, j, player);
             int eval = minimax(depth - 1, a, b, -player, 1);
             undo();
             minEval = min(minEval, eval);
@@ -92,6 +93,7 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
             if(b <= a)
                 break;
         }
+        return minEval;
     }
 }
 
