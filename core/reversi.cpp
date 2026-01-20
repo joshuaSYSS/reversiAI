@@ -1,6 +1,7 @@
 #include <vector>
 #include <set>
 #include <optional>
+#include <iostream>
 
 using namespace std;
 
@@ -132,4 +133,23 @@ int hasWinner(){
 
 vector<vector<int>> getBoard() {
 	return board;
+}
+
+void printBoard(){
+	cout << "  ";
+	for(int j = 0; j < BOARD_SIZE; j++){
+		cout << j << " ";
+	}
+	cout << endl;
+	for(int i = 0; i < BOARD_SIZE; i++){
+		cout << i << " ";
+		for(int j = 0; j < BOARD_SIZE; j++){
+			char c;
+			if(board[i][j] == 1) c = 'X';
+			else if(board[i][j] == -1) c = 'O';
+			else c = '.';
+			cout << c << " ";
+		}
+		cout << endl;
+	}
 }
