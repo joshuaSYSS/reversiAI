@@ -122,5 +122,6 @@ pair<int, int> callAI(int player){
             best_j = j;
         }
     }
+	cout << "\nBest Score: " << best_score << endl;
     return {best_i, best_j};
 }
