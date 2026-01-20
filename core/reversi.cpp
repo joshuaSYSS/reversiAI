@@ -6,7 +6,18 @@
 using namespace std;
 
 const int BOARD_SIZE = 8;
-static vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
+//static vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
+
+static vector<vector<int>> board  = {
+        { 1, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0},
+        { 0, 0, 0, 0, 0, 0, 0, 0}
+    };
 
 const int DIRECTION_SIZE = 8;
 const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
