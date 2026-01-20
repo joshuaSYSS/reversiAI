@@ -114,7 +114,7 @@ pair<int, int> callAI(int player){
     int best_score = -inf;
     for(auto [i, j] : validmove){
         place1(i, j, player);
-        int score = minimax(MAX_DEPTH - 1, -inf, inf, -player, 1);
+        int score = minimax(MAX_DEPTH - 1, -inf, inf, -player, 0);
         undo();
         if(score > best_score){
             best_score = score;
