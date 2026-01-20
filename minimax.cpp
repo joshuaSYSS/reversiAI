@@ -10,7 +10,7 @@ const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
 											{-1, -1},	{-1, 0},	{-1, 1}
 };
 const int inf = 1e9;
-const int MAX_DEPTH = 4;
+const int MAX_DEPTH = 8;
 const int BOARD_SIZE = 8;
 
 static vector<vector<int>> board;
@@ -104,7 +104,7 @@ pair<int, int> callAI(int player){
     persistent = stack<vector<pers>>();
     set<pair<int, int>> validmove = getvalidmove(player);
     int best_i = -1, best_j = -1;
-    int best_score = -player*inf;
+    int best_score = -inf;
     for(auto [i, j] : validmove){
         int score = minimax(MAX_DEPTH, -inf, inf, -player, 1);
         if(score > best_score){

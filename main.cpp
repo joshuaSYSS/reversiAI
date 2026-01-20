@@ -6,7 +6,7 @@ int main(void){
     int player = 1;
     while(true){
         pair<int, int> move;
-        if(player == 1){
+        if(player == -1){
             cout << "Your turn (format: row col): ";
             int i, j;
             cin >> i >> j;
