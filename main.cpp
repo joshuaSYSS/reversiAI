@@ -10,6 +10,11 @@ int main(void){
             cout << "Your turn (format: row col): ";
             int i, j;
             cin >> i >> j;
+            set<pair<int, int>> validmove = getvalidmove(player);
+            while(!validmove.count({i, j})){
+                cout << "Invalid move. Try again: ";
+                cin >> i >> j;
+            }
             move = {i, j};
         }
         else{
