@@ -164,9 +164,9 @@ void printBoard(int showplayermove=0){
 		cout << i << " ";
 		for(int j = 0; j < BOARD_SIZE; j++){
 			switch(boardcopy[i][j]){
-				case 1: 	cout << "● ";	break;
-				case -1: 	cout << "○ ";	break;
-				case 2:		cout << "◦ ";	break;
+				case 1: 	cout << "x ";	break;
+				case -1: 	cout << "o ";	break;
+				case 2:		cout << ". ";	break;
 				default:	cout << ". ";
 			}
 		}

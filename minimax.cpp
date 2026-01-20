@@ -10,7 +10,7 @@ const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
 											{-1, -1},	{-1, 0},	{-1, 1}
 };
 const int inf = 1e9;
-const int MAX_DEPTH = 8;
+const int MAX_DEPTH = 10;
 const int BOARD_SIZE = 8;
 
 static vector<vector<int>> board;
@@ -71,7 +71,7 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         int maxEval = -inf;
         set<pair<int, int>> validmove = getvalidmove(player);
         if(validmove.empty()){
-            int eval = minimax(depth, a, b, -player, 0);
+            int eval = minimax(depth - 1, a, b, -player, 0);
             return eval;
         }
         for(auto [i, j] : validmove){
@@ -89,7 +89,7 @@ int minimax(int depth, int a, int b, int player, int isMax){   //player: 1/-1
         int minEval = inf;
         set<pair<int, int>> validmove = getvalidmove(player);
         if(validmove.empty()){
-            int eval = minimax(depth, a, b, -player, 1);
+            int eval = minimax(depth - 1, a, b, -player, 1);
             return eval;
         }
         for(auto [i, j] : validmove){

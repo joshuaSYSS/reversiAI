@@ -17,8 +17,8 @@ int getWeight(vector<vector<int>>& board, int player) {
     int sum = 0;
     for(int i = 0; i < BOARD_SIZE; i++) {
         for(int j = 0; j < BOARD_SIZE; j++) {
-            sum += (board[i][j] == 0) ? 0 : (board[i][j] == player) ? WEIGHTS[i][j] : -WEIGHTS[i][j];
+            sum += (board[i][j] == 0) ? 0 : WEIGHTS[i][j];
         }
     }
-    return player*sum;
+    return sum;
 }
