@@ -23,7 +23,7 @@ int main(void){
             cout << "AI plays: " << move.first << " " << move.second << endl;
         }
         place(move.first, move.second, player);
-        printBoard();
+        printBoard(player);
         int nextplayer = hasWinner(player);
 
         switch(nextplayer){
