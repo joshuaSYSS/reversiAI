@@ -19,7 +19,14 @@ int main(void){
         }
         place(move.first, move.second, player);
         printBoard();
-        int winner = hasWinner(player);
+        int nextplayer = hasWinner(player);
+
+        switch(nextplayer){
+        	case 2:		cout << "Player 1 wins!" << endl; 	break;
+        	case -2:	cout << "Player 2 wins!" << endl;	break;
+        	case 0:		cout << "It's a draw!" << endl;		break;
+        	default:	player = nextplayer;
+                
         if(winner != 1 && winner != -1){
             if(winner == 1) cout << "Player 1 wins!" << endl;
             else if(winner == -1) cout << "Player 2 wins!" << endl;
