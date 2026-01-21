@@ -23,3 +23,6 @@ int getWeight(const vector<vector<int>>& board, int rootPlayer) {
     }
     return sum;
 }
+int getWeight(int i, int j){
+    return WEIGHTS[i][j];
+}

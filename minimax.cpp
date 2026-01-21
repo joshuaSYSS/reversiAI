@@ -3,6 +3,8 @@
 #include <vector>
 #include <set>
 #include <stack>
+#include <optional>
+#include <algorithm>
 #include "core/reversi.h"
 #include "weight.h"
 #include "minimax.h"
@@ -11,7 +13,7 @@
 using namespace std;
 
 const int inf = 1e9;
-const int MAX_DEPTH = 10;
+const int MAX_DEPTH = 8;
 
 pair<int, int> callAI(const Board& gameBoard, int player){
     int best_i = -1, best_j = -1;
@@ -19,13 +21,13 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     auto validmove = gameBoard.getvalidmove(player);
     
     cout << "AI is calculating the best move..." << endl;
-    cout << "AI found " << validmove.size() << " valid moves." << endl;
-
+    //cout << "AI found " << validmove.size() << " valid moves." << endl;
+    
     for(auto [i, j] : validmove){
         Board virtualBoard = gameBoard;
         virtualBoard.place(i, j, player);
         int score = minimax(virtualBoard, MAX_DEPTH - 1, -inf, inf, -player, 0, player);
-        cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
+        //cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
 
         if(score > best_score){
             best_score = score;
@@ -35,6 +37,10 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     }
     cout << "AI plays: " << best_i << " " << best_j << endl;
     return {best_i, best_j};
+}
+
+bool cmp(pair<int, int> a, pair<int, int> b){
+    return getWeight(a.first, a.second) > getWeight(b.first, b.second);
 }
 
 int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
@@ -58,6 +64,10 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
     }
     
     if(isMax){
+        vector<pair<int, int>> moves(validmove.begin(), validmove.end());
+        sort(moves.begin(), moves.end(), cmp);
+        validmove = set<pair<int, int>>(moves.begin(), moves.end());
+
         int maxEval = -inf;
         
         for(auto [i, j] : validmove){
