@@ -1,4 +1,4 @@
 #include <vector>
 using namespace std;
 
-int getWeight(vector<vector<int>>&, int);
+int getWeight(const vector<vector<int>>&, int);
