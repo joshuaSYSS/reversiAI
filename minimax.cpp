@@ -1,110 +1,69 @@
+#ifndef MINIMAX_H
+#define MINIMAX_H
 #include <vector>
 #include <set>
 #include <stack>
-#include "weight.h"
 #include "core/reversi.h"
+#include "weight.h"
+#include "minimax.h"
+
+
 using namespace std;
 
-const vector<pair<int, int>> DIRECTIONS =	{{1, -1},	{1, 0},		{1, 1},
-											{0, -1},				{0, 1},
-											{-1, -1},	{-1, 0},	{-1, 1}
-};
 const int inf = 1e9;
 const int MAX_DEPTH = 10;
-const int BOARD_SIZE = 8;
 
-static vector<vector<int>> board;
+pair<int, int> callAI(const Board& gameBoard, int player){
+    int best_i = -1, best_j = -1;
+    int best_score = -inf;
+    auto validmove = gameBoard.getvalidmove(player);
+    
+    cout << "AI is calculating the best move..." << endl;
+    cout << "AI found " << validmove.size() << " valid moves." << endl;
 
-struct pers{
-    int i;
-    int j;
-    int prev_value;
-};
+    for(auto [i, j] : validmove){
+        Board virtualBoard = gameBoard;
+        virtualBoard.place(i, j, player);
+        int score = minimax(virtualBoard, MAX_DEPTH - 1, -inf, inf, -player, 0, player);
+        cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
 
-stack<vector<pers>> persistent;
-
-//undo
-void undo(){
-    vector<pers> last_move = persistent.top();
-    persistent.pop();
-    for(auto mv : last_move){
-        board[mv.i][mv.j] = mv.prev_value;
+        if(score > best_score){
+            best_score = score;
+            best_i = i;
+            best_j = j;
+        }
     }
+    cout << "AI plays: " << best_i << " " << best_j << endl;
+    return {best_i, best_j};
 }
 
-vector<pers> p;
-void update(int i, int j){
-    persistent.push(p);
-}
-
-bool reverse(int player, int i, int j, pair<int, int> direction) {
-	int x = i + direction.first, y = j + direction.second;
-
-	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE || board[x][y] == 0)	return false;
-	if(board[x][y] == -player) {
-		if(reverse(player, x, y, direction)) {
-            p.push_back({x, y, board[x][y]});
-			board[x][y] = player;
-			return true;
-		}
-	}
-	return (board[x][y] == player);
-}
-
-void place1(int i, int j, int player) {
-    p.clear();
-    p.push_back({i, j, board[i][j]});
-	board[i][j] = player;
-	for(auto& d: DIRECTIONS) reverse(player, i, j, d);	//check for each direction, reverse all opponent chess between the two self chesses "o x x o"
-    update(i, j);
-}
-
-int determineWinner1() {
-    int sum = 0;
-    for(int i = 0; i < BOARD_SIZE; i++)
-        for(int j = 0; j < BOARD_SIZE; j++)
-            sum += board[i][j];
-    return sum > 0 ? 2 : (sum < 0 ? -2 : 0);
-}
-
-int hasWinner1(int player) {
-    for(const auto& row : board)
-        for(int cell : row)
-            if(cell == 0)
-                goto not_full;
-    return determineWinner1();
-not_full:
-    if(!getvalidmove(-player).empty()) return -player;
-    if(!getvalidmove(player).empty()) return player;
-    return determineWinner1();
-}
-//      i, j, score
-int minimax(int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
+int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
     if(depth == 0){
-        set<pair<int, int>> validmove1 = getvalidmove(player);
-        set<pair<int, int>> validmove2 = getvalidmove(-player);
-        if(validmove1.empty() && validmove2.empty()){
-            int winner = hasWinner1(rootPlayer);
+        //返回值:	2= 黑 贏 | -2= o=白 贏 | 0= 平局 | 1= 黑 繼續 | -1= 白 繼續
+        if(virtualBoard.getvalidmove(player).empty() && virtualBoard.getvalidmove(-player).empty()){
+            int winner = virtualBoard.hasWinner(rootPlayer);
             if(winner == 2) return inf;        //rootPlayer wins
             else if(winner == -2) return -inf; //rootPlayer loses
             else return 0;                     //draw
         }
         int score;
-        score = getWeight(board, rootPlayer);
+        score = getWeight(virtualBoard.getBoard(), rootPlayer);
         return score;
+    }
+
+    set<pair<int, int>> validmove = virtualBoard.getvalidmove(player);
+
+    if(validmove.empty()){
+        return minimax(virtualBoard, depth - 1, a, b, -player, 1-isMax, rootPlayer);
     }
     
     if(isMax){
         int maxEval = -inf;
-        set<pair<int, int>> validmove = getvalidmove(player);
-        if(validmove.empty()){
-            int eval = minimax(depth - 1, a, b, -player, 0, rootPlayer);
-            return eval;
-        }
+        
         for(auto [i, j] : validmove){
-            place1(i, j, player);
-            int eval = minimax(depth - 1, a, b, -player, 0, rootPlayer);
-            undo();
+            virtualBoard.place(i, j, player);
+            int eval = minimax(virtualBoard, depth - 1, a, b, -player, 0, rootPlayer);
+            virtualBoard.undo();
             maxEval = max(maxEval, eval);
             a = max(a, eval);
             if(b <= a)
@@ -114,15 +73,11 @@ int minimax(int depth, int a, int b, int player, int isMax, int rootPlayer){   /
     }
     else{
         int minEval = inf;
-        set<pair<int, int>> validmove = getvalidmove(player);
-        if(validmove.empty()){
-            int eval = minimax(depth - 1, a, b, -player, 1, rootPlayer);
-            return eval;
-        }
+        
         for(auto [i, j] : validmove){
-            place1(i, j, player);
-            int eval = minimax(depth - 1, a, b, -player, 1, rootPlayer);
-            undo();
+            virtualBoard.place(i, j, player);
+            int eval = minimax(virtualBoard, depth - 1, a, b, -player, 1, rootPlayer);
+            virtualBoard.undo();
             minEval = min(minEval, eval);
             b = min(b, eval);
             if(b <= a)
@@ -132,22 +87,4 @@ int minimax(int depth, int a, int b, int player, int isMax, int rootPlayer){   /
     }
 }
 
-
-pair<int, int> callAI(int player){
-    board = getBoard();
-    persistent = stack<vector<pers>>();
-    set<pair<int, int>> validmove = getvalidmove(player);
-    int best_i = -1, best_j = -1;
-    int best_score = -inf;
-    for(auto [i, j] : validmove){
-        place1(i, j, player);
-        int score = minimax(MAX_DEPTH - 1, -inf, inf, -player, 0, player);
-        undo();
-        if(score > best_score){
-            best_score = score;
-            best_i = i;
-            best_j = j;
-        }
-    }
-    return {best_i, best_j};
-}
+#endif
