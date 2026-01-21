@@ -59,7 +59,7 @@ void place1(int i, int j, int player) {
     update(i, j);
 }
 
-int determineWinner() {
+int determineWinner1() {
     int sum = 0;
     for(int i = 0; i < BOARD_SIZE; i++)
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -72,11 +72,11 @@ int hasWinner1(int player) {
         for(int cell : row)
             if(cell == 0)
                 goto not_full;
-    return determineWinner();
+    return determineWinner1();
 not_full:
     if(!getvalidmove(-player).empty()) return -player;
     if(!getvalidmove(player).empty()) return player;
-    return determineWinner();
+    return determineWinner1();
 }
 //      i, j, score
 int minimax(int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
