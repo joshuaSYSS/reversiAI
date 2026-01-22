@@ -69,11 +69,10 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
     if(isMax){
         vector<pair<int, int>> moves(validmove.begin(), validmove.end());
         sort(moves.begin(), moves.end(), cmp);
-        validmove = set<pair<int, int>>(moves.begin(), moves.end());
 
         int maxEval = -inf;
         
-        for(auto [i, j] : validmove){
+        for(auto [i, j] : moves){
             virtualBoard.place(i, j, player);
             int eval = minimax(virtualBoard, depth - 1, a, b, -player, 0, rootPlayer);
             virtualBoard.undo();
