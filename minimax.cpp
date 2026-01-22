@@ -31,6 +31,7 @@ pair<int, int> callAI(const Board& gameBoard, int player){
             Board virtualBoard = gameBoard;
             virtualBoard.place(i, j, player);
             int score = minimax(virtualBoard, MAX_DEPTH - 1, -inf, inf, -player, 0, player);
+            virtualBoard.undo();
             return make_pair(score, i*100 + j); // encode move
         }));
     }
