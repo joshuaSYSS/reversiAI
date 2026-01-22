@@ -47,9 +47,9 @@ void Board::printBoard(int showplayermove) const{
 		for(int j = 0; j < BOARD_SIZE; j++) {
 			
 			switch(displayBoard[i][j]) {
-				case 1: 	cout << "o ";	break; //●
-				case -1: 	cout << "x ";	break; //○
-				case 2:		cout << ". ";	break; //◦
+				case 1: 	cout << "● ";	break; //●
+				case -1: 	cout << "○ ";	break; //○
+				case 2:		cout << "◦ ";	break; //◦
 				default:	cout << ". ";
 			}
 		}
@@ -87,26 +87,28 @@ void Board::undo() {
 	}
 }
 
-optional<pair<int, int>> Board::availablefield(const vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction, bool op_found) const{
+bool Board::isValidMove(int player, int i, int j, pair<int, int> direction, bool op_found) const{
 	int x = i + direction.first, y = j + direction.second;
-
-	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return nullopt;
-	if(board[x][y] == 0)	return op_found ? optional{pair{x, y}} : nullopt;
-	if(board[x][y] == -player)	return availablefield(board, player, x, y, direction, 1);
-	return nullopt;
+	if(x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)	return 0;
+	
+	if(board[x][y] == 0)	return 0;
+	if(board[x][y] == -player) return isValidMove(player, x, y, direction, 1);
+	if(board[x][y] == player)	return op_found ? 1 : 0;
+	return 0;
 }
 
-set<pair<int, int>> Board::getvalidmove(int player) const{
+vector<pair<int, int>> Board::getvalidmove(int player) const{
 	set<pair<int, int>> validmove;
 
 	for(int i=0; i<BOARD_SIZE; i++)
 		for(int j=0; j<BOARD_SIZE; j++)
-			if(board[i][j]==player)
+			if(board[i][j]==0)
 				for(auto& d : DIRECTIONS)
-					if(auto result = availablefield(board, player, i, j, d)){
-						validmove.insert(*result);
+					if(isValidMove(player, i, j, d)){
+						validmove.insert({i, j});
+						break;
 					}
-	return validmove;
+	return vector<pair<int, int>>(validmove.begin(), validmove.end());
 }
 
 int Board::determineWinner() {

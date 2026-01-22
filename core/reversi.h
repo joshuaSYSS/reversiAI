@@ -39,9 +39,9 @@ public:
 
 	void undo();
 
-	optional<pair<int, int>> availablefield(const vector<vector<int>>& board, int player, int i, int j, pair<int, int> direction, bool op_found=0) const;
+	bool isValidMove(int player, int i, int j, pair<int, int> direction, bool op_found=0) const;
 
-	set<pair<int, int>> getvalidmove(int player) const;
+	vector<pair<int, int>> getvalidmove(int player) const;
 
 	int determineWinner();
 
