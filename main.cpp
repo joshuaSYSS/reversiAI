@@ -32,6 +32,11 @@ int main(void){
         }
         else{
             move = callAI(gameBoard, player);
+            if(move == pair{-1, -1}){
+                cout << "AI gives up." << endl;
+                cout << "You win!" << endl;
+                break;
+            }
         }
         gameBoard.place(move.first, move.second, player);
         int nextplayer = gameBoard.hasWinner(player);

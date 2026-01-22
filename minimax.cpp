@@ -2,6 +2,7 @@
 #define MINIMAX_H
 #include <vector>
 #include <set>
+#include <algorithm>
 #include <stack>
 #include "core/reversi.h"
 #include "weight.h"
