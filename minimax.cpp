@@ -8,6 +8,7 @@
 #include "core/reversi.h"
 #include "weight.h"
 #include "minimax.h"
+#include "heuristic.h"
 
 
 using namespace std;
@@ -53,7 +54,7 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
             else return 0;                     //draw
         }
         int score;
-        score = getWeight(virtualBoard.getBoard(), rootPlayer);
+        score = evalScore(virtualBoard.getBoard(), rootPlayer);
         return score;
     }
 
