@@ -182,7 +182,9 @@ double update_elo(double my_rating, double opponent_rating, double actual_score,
 }
 
 void calc(){
-    int t = 10;
+    int t = 5;
+    double my_elo = 1200.0;
+    double enemy_elo = 800.0; // The Greedy Bot
     while(t--){
     int player = 1;
     vector<vector<int>> initial_board = {
@@ -228,9 +230,6 @@ void calc(){
         	default:	player = nextplayer;
         }
     }
-
-    double my_elo = 1200.0;
-    double enemy_elo = 800.0; // The Greedy Bot
 
     // Scenario: You played a game and WON (Score = 1.0)
 
