@@ -17,7 +17,7 @@ int evalScore(const vector<vector<int>>& board, int player){
         int y = corner.second;
         if(board[x][y] == player){
             stable[x][y] = true;
-            permScore += 25; // Arbitrary high score for corner
+            permScore += abs(getWeight(x, y)); // Score for stable corner
             // Expand stability from corner
             int dx = (x == 0) ? 1 : -1;
             int dy = (y == 0) ? 1 : -1;
@@ -25,7 +25,7 @@ int evalScore(const vector<vector<int>>& board, int player){
                 for(int j = y; j >= 0 && j < n; j += dy){
                     if(board[i][j] == player){
                         stable[i][j] = true;
-                        permScore += 10; // Score for stable edge
+                        permScore += abs(getWeight(i, j)); // Score for stable edge
                     } else {
                         break;
                     }
