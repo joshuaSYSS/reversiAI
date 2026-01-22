@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <stack>
 #include <future>
+#include <random>
 #include "core/reversi.h"
 #include "weight.h"
 #include "minimax.h"
@@ -14,9 +15,11 @@
 using namespace std;
 
 const int inf = 1e9;
-const int MAX_DEPTH = 8;
+const int MAX_DEPTH = 6;
 
 pair<int, int> callAI(const Board& gameBoard, int player){
+    srand(time(NULL));
+
     int best_i = -1, best_j = -1;
     int best_score = -inf;
     auto validmove = gameBoard.getvalidmove(player);
@@ -82,7 +85,8 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
 
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
-            int eval = minimax(virtualBoard, depth - 1, a, b, -player, 0, rootPlayer);
+            int deduce = rand() % 10 < 5 ? 0 : 1;
+            int eval = minimax(virtualBoard, depth - deduce, a, b, -player, 0, rootPlayer);
             virtualBoard.undo();
             maxEval = max(maxEval, eval);
             a = max(a, eval);
@@ -100,7 +104,8 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
         
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
-            int eval = minimax(virtualBoard, depth - 1, a, b, -player, 1, rootPlayer);
+            int deduce = rand() % 10 < 5 ? 0 : 1;
+            int eval = minimax(virtualBoard, depth - deduce, a, b, -player, 1, rootPlayer);
             virtualBoard.undo();
             minEval = min(minEval, eval);
             b = min(b, eval);
