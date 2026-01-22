@@ -11,7 +11,7 @@ bool count(const vector<pair<int, int>>& vec, const pair<int, int>& val){
 }
 
 int main(void){
-    calc();
+    //calc();
 
     int player = 1;
     Board gameBoard = Board();
