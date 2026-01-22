@@ -3,9 +3,6 @@
 #include <vector>
 #include <set>
 #include <stack>
-#include <optional>
-#include <algorithm>
-#include <thread>
 #include "core/reversi.h"
 #include "weight.h"
 #include "minimax.h"
@@ -23,15 +20,14 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     auto validmove = gameBoard.getvalidmove(player);
     
     cout << "AI is calculating the best move..." << endl;
-    //cout << "AI found " << validmove.size() << " valid moves." << endl;
-    
+    cout << "AI found " << validmove.size() << " valid moves." << endl;
+
     for(auto [i, j] : validmove){
         Board virtualBoard = gameBoard;
-        virtualBoard.place(i, j, player);
-        int score = minimax(virtualBoard, MAX_DEPTH - 1, -inf, inf, -player, 0, player);
-        virtualBoard.undo();
-        //cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
 
+        int score = minimax(virtualBoard, MAX_DEPTH, -inf, inf, player, 1, player);
+
+        cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
         if(score > best_score){
             best_score = score;
             best_i = i;
@@ -42,14 +38,13 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     return {best_i, best_j};
 }
 
-bool cmp(pair<int, int> a, pair<int, int> b){
-    return getWeight(a.first, a.second) > getWeight(b.first, b.second);
-}
-
 int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
+
+    vector<pair<int, int>> validmove = virtualBoard.getvalidmove(player);
+
     if(depth == 0){
         //返回值:	2= 黑 贏 | -2= o=白 贏 | 0= 平局 | 1= 黑 繼續 | -1= 白 繼續
-        if(virtualBoard.getvalidmove(player).empty() && virtualBoard.getvalidmove(-player).empty()){
+        if(validmove.empty() && virtualBoard.getvalidmove(-player).empty()){
             int winner = virtualBoard.hasWinner(rootPlayer);
             if(winner == 2) return inf;        //rootPlayer wins
             else if(winner == -2) return -inf; //rootPlayer loses
@@ -60,19 +55,18 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
         return score;
     }
 
-    set<pair<int, int>> validmove = virtualBoard.getvalidmove(player);
-
     if(validmove.empty()){
         return minimax(virtualBoard, depth - 1, a, b, -player, 1-isMax, rootPlayer);
     }
     
     if(isMax){
-        vector<pair<int, int>> moves(validmove.begin(), validmove.end());
-        sort(moves.begin(), moves.end(), cmp);
-
         int maxEval = -inf;
         
-        for(auto [i, j] : moves){
+        sort(validmove.begin(), validmove.end(), [](pair<int, int> a, pair<int, int> b){
+            return getWeight(a.first, a.second) > getWeight(b.first, b.second);
+        });
+
+        for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
             int eval = minimax(virtualBoard, depth - 1, a, b, -player, 0, rootPlayer);
             virtualBoard.undo();
@@ -85,6 +79,10 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
     }
     else{
         int minEval = inf;
+
+        sort(validmove.begin(), validmove.end(), [](pair<int, int> a, pair<int, int> b){
+            return getWeight(a.first, a.second) < getWeight(b.first, b.second);
+        });
         
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
