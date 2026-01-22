@@ -2,6 +2,13 @@
 #include "core/reversi.h"
 #include "minimax.h"
 using namespace std;
+
+bool count(const vector<pair<int, int>>& vec, const pair<int, int>& val){
+    //Binary search
+    auto it = lower_bound(vec.begin(), vec.end(), val);
+    return it != vec.end() && *it == val;
+}
+
 int main(void){
     int player = 1;
     Board gameBoard = Board();
@@ -24,7 +31,7 @@ int main(void){
                 cin >> i >> j;
             }
 
-            while(!gameBoard.getvalidmove(player).count({i, j})){
+            while(!count(gameBoard.getvalidmove(player), {i, j})){
                 cout << "Invalid move. Try again: ";
                 cin >> i >> j;
             }
