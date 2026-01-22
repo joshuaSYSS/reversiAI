@@ -13,7 +13,9 @@ int main(void){
     int player = 1;
     Board gameBoard = Board();
     gameBoard.refreshBoard();
-    while(true){
+
+    bool gamePlaying = true;
+    while(gamePlaying){
         pair<int, int> move = {-1,-1};
         gameBoard.printBoard(player);
 
@@ -49,9 +51,9 @@ int main(void){
         int nextplayer = gameBoard.hasWinner(player);
 
         switch(nextplayer){
-        	case 2:		cout << "Player 1 wins!" << endl; 	break;
-        	case -2:	cout << "Player 2 wins!" << endl;	break;
-        	case 0:		cout << "It's a draw!" << endl;		break;
+        	case 2:		cout << "Player 1 wins!" << endl; 	gamePlaying = false; break;
+        	case -2:	cout << "Player 2 wins!" << endl;	gamePlaying = false; break;
+        	case 0:		cout << "It's a draw!" << endl;		gamePlaying = false; break;
         	default:	player = nextplayer;
         }
     }
