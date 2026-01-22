@@ -85,7 +85,7 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
 
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
-            int deduce = rand() % 10 < 5 ? 0 : 1;
+            int deduce = rand() % 100 < 7 ? 0 : 1;
             int eval = minimax(virtualBoard, depth - deduce, a, b, -player, 0, rootPlayer);
             virtualBoard.undo();
             maxEval = max(maxEval, eval);
@@ -104,7 +104,7 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
         
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
-            int deduce = rand() % 10 < 5 ? 0 : 1;
+            int deduce = rand() % 100 < 7 ? 0 : 1;
             int eval = minimax(virtualBoard, depth - deduce, a, b, -player, 1, rootPlayer);
             virtualBoard.undo();
             minEval = min(minEval, eval);
