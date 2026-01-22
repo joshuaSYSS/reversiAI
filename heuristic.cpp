@@ -25,7 +25,7 @@ int evalScore(const vector<vector<int>>& board, int player){
                 for(int j = y; j >= 0 && j < n; j += dy){
                     if(board[i][j] == player){
                         stable[i][j] = true;
-                        permScore += abs(getWeight(i, j)); // Score for stable edge
+                        permScore += abs(getWeight(i, j)) * 2; // Score for stable edge
                     } else {
                         break;
                     }
