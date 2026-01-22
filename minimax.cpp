@@ -4,6 +4,7 @@
 #include <set>
 #include <algorithm>
 #include <stack>
+#include <future>
 #include "core/reversi.h"
 #include "weight.h"
 #include "minimax.h"
@@ -19,25 +20,36 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     int best_i = -1, best_j = -1;
     int best_score = -inf;
     auto validmove = gameBoard.getvalidmove(player);
-    
+
     cout << "AI is calculating the best move..." << endl;
-    cout << "AI found " << validmove.size() << " valid moves." << endl;
+
+    // Store futures for parallel evaluation
+    vector<future<pair<int,int>>> futures;
 
     for(auto [i, j] : validmove){
-        Board virtualBoard = gameBoard;
+        futures.push_back(async(launch::async, [&, i, j](){
+            Board virtualBoard = gameBoard;
+            virtualBoard.place(i, j, player);
+            int score = minimax(virtualBoard, MAX_DEPTH - 1, -inf, inf, -player, 0, player);
+            return make_pair(score, i*100 + j); // encode move
+        }));
+    }
 
-        int score = minimax(virtualBoard, MAX_DEPTH, -inf, inf, player, 1, player);
-
-        cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
+    // Collect results
+    for(auto &f : futures){
+        auto [score, move] = f.get();
+        int i = move / 100, j = move % 100;
         if(score > best_score){
             best_score = score;
             best_i = i;
             best_j = j;
         }
     }
+
     cout << "AI plays: " << best_i << " " << best_j << endl;
     return {best_i, best_j};
 }
+
 
 int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax, int rootPlayer){   //player: 1/-1
 
