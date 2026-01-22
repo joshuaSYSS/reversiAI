@@ -14,7 +14,7 @@
 using namespace std;
 
 const int inf = 1e9;
-const int MAX_DEPTH = 9;
+const int MAX_DEPTH = 8;
 
 pair<int, int> callAI(const Board& gameBoard, int player){
     int best_i = -1, best_j = -1;
