@@ -1,6 +1,7 @@
 #include <iostream>
 #include "core/reversi.h"
 #include "minimax.h"
+#include "calcELO.h"
 using namespace std;
 
 bool count(const vector<pair<int, int>>& vec, const pair<int, int>& val){
