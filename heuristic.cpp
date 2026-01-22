@@ -1,5 +1,6 @@
 #include <vector>
 #include <set>
+#include <cmath>
 #include "weight.h"
 using namespace std;
 

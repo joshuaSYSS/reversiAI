@@ -5,6 +5,7 @@
 #include <stack>
 #include <optional>
 #include <algorithm>
+#include <thread>
 #include "core/reversi.h"
 #include "weight.h"
 #include "minimax.h"
@@ -28,6 +29,7 @@ pair<int, int> callAI(const Board& gameBoard, int player){
         Board virtualBoard = gameBoard;
         virtualBoard.place(i, j, player);
         int score = minimax(virtualBoard, MAX_DEPTH - 1, -inf, inf, -player, 0, player);
+        virtualBoard.undo();
         //cout << "AI evaluating move (" << i << ", " << j << "): " << score << endl;
 
         if(score > best_score){
