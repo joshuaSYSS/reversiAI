@@ -25,6 +25,11 @@ Board::Board() {
 	persistent = stack<vector<pers>>();
 }
 
+Board::Board(vector<vector<int>>& b) {
+	board = b;
+	persistent = stack<vector<pers>>();
+}
+
 vector<vector<int>> Board::getBoard() {
 	return board;
 }

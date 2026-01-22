@@ -29,6 +29,8 @@ public:
 
 	Board();
 
+	Board(vector<vector<int>>& b);
+
 	vector<vector<int>> getBoard() ;
 
 	void printBoard(int showplayermove=0) const;

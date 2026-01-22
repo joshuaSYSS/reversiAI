@@ -21,7 +21,7 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     int best_score = -inf;
     auto validmove = gameBoard.getvalidmove(player);
 
-    cout << "AI is calculating the best move..." << endl;
+    //cout << "AI is calculating the best move..." << endl;
 
     // Store futures for parallel evaluation
     vector<future<pair<int,int>>> futures;
