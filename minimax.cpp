@@ -16,6 +16,7 @@ using namespace std;
 
 const int inf = 1e9;
 const int MAX_DEPTH = 6;
+const int PROB = 1;
 
 pair<int, int> callAI(const Board& gameBoard, int player){
     srand(time(NULL));
@@ -24,7 +25,7 @@ pair<int, int> callAI(const Board& gameBoard, int player){
     int best_score = -inf;
     auto validmove = gameBoard.getvalidmove(player);
 
-    //cout << "AI is calculating the best move..." << endl;
+    cout << "AI is calculating the best move..." << endl;
 
     // Store futures for parallel evaluation
     vector<future<pair<int,int>>> futures;
@@ -85,7 +86,7 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
 
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
-            int deduce = rand() % 10 < 5 ? 0 : 1;
+            int deduce = rand() % 10 < PROB ? 0 : 1;
             int eval = minimax(virtualBoard, depth - deduce, a, b, -player, 0, rootPlayer);
             virtualBoard.undo();
             maxEval = max(maxEval, eval);
@@ -104,7 +105,7 @@ int minimax(Board& virtualBoard, int depth, int a, int b, int player, int isMax,
         
         for(auto [i, j] : validmove){
             virtualBoard.place(i, j, player);
-            int deduce = rand() % 10 < 5 ? 0 : 1;
+            int deduce = rand() % 10 < PROB ? 0 : 1;
             int eval = minimax(virtualBoard, depth - deduce, a, b, -player, 1, rootPlayer);
             virtualBoard.undo();
             minEval = min(minEval, eval);
